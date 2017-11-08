@@ -1,8 +1,8 @@
 **Coding projects from classes taken at the Oregon State University Computer Science program.**
-
-
-
-
+                                                                                                       
+                                                                                               
+                                                                                   
+                                                                                                                                
 **Assembly Language**
    
     -CS 271: Computer Architecture and Assembly Language
