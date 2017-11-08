@@ -1,6 +1,4 @@
-# Portfolio
-
-**Coding and design projects from classes taken at the Oregon State University Computer Science program.**
+**Coding projects from classes taken at the Oregon State University Computer Science program.**
 
 
 
@@ -17,10 +15,10 @@
     
     -CS 162: Introduction to Computer Science II
 
-**Web Development (java script, node.js, HTML5, CSS, express)**
+**Web Development (JavaScript, Node.js, Express.js, Handlebars.js HTML5, CSS)**
   
     -CS 270: Web Development 
-    -Personal Projects
+    
     
 **bash shell script**
 
