@@ -1,0 +1,206 @@
+#!/bin/bash
+
+#Class: CS344
+#Title: bash script 1 stats
+#Author: David Ramirez
+#Date: 10/9/17
+#Description: script that reads either the rows or columns of input and calculates and outputs the median and mean per column or row
+
+
+
+
+##trap to remove temp files for hang up, interrupt, terminate, and kill signals##
+trap "rm -f temp1$$; rm -f temp2$$; exit 1" HUP TERM INT KILL
+##no errors = 0; any errors = 1##
+errTrack=0
+
+##checks for correct number of arguments##
+if [[ $# != 1 && $# != 2 ]];
+	then echo "Incorrect number of arguments" 1>&2
+	errTrack=1
+fi
+
+##checks for format of arguments##
+if [[ $1 != -c* && $1 != -r* ]];
+	then echo "Incorrect argument format" 1>&2
+	errTrack=1
+fi
+
+##if the file provided in the arguments does not exist, exit with "1"##
+if [ -a $2  ]; 
+	then nothing=0
+	
+else
+	exit 1
+fi
+
+##if the file provided in the arguments is empty, exit normally##
+if [ -s $2 ];
+	then nothing=0
+else
+	exit 0
+fi
+
+#if the file provided in the arguments is not readable, print message to stderr and exit with "1"
+if [ -r $2 ];
+	then nothing=0
+else
+	echo "File provided is not readable" 1>&2
+	exit 1
+fi
+
+##exits program with "1" if wrong number of arguments or wrong argument format##
+if [ $errTrack = 1 ];
+	then exit 1
+fi 
+
+##tests if file provided in arguments, read from provided file if so##
+if [ "$2" ] ; 
+	then exec < "$2" ; 
+fi
+
+
+##function for if rows are selected for statistics##
+calcRows () 
+{
+	#make header for list of values#
+	echo "Average	Median" 
+	
+	#loop that reads each line#
+	while read lineData; do
+		sumRows=0
+		counterRowElem=0
+	
+		#for each line, add all elements and count all elements#
+		for i in $lineData
+		do
+			sumRows=`expr $sumRows + $i`
+			counterRowElem=`expr $counterRowElem + 1`
+		done
+
+		middle=$((($counterRowElem + 1)/2))
+                if !(( counterRowElem % 2 ));
+                        then middle=`expr $middle + 1`
+                fi
+	
+
+		#calculate mean of row elements#
+		meanRows=$((($sumRows + ($counterRowElem/2))/$counterRowElem))
+
+		#sorts line
+		sortedLine=$(echo $lineData | tr [:space:] '\n' | sort -n )
+		#sends sorted line to file temp1
+		echo $sortedLine > temp1$$
+		#saves middle value cut from temp1 to medianRows
+		medianRows=$(cut -d" " -f $middle temp1$$)
+		echo "$meanRows	$medianRows"
+	done 
+	
+	rm temp1$$
+}
+
+
+##function for if columns are selected for statistics##
+calcCols () 
+{ 
+	#variable that keeps track of number of elements in columns#
+	counterColElem=0
+
+        #loop that reads each column#
+        while read lineData2; do
+	#place each line in temp file#
+	echo $lineData2 >> temp2$$
+	counterColElem=`expr $counterColElem + 1`
+	done
+
+	#loop to get columns#
+	while read lineData3; do
+
+		fileCount=1
+
+		for i in $lineData3 
+		do
+
+			echo $lineData3|cut -d " " -f $fileCount >> tempCol${fileCount}$$
+			fileCount=`expr $fileCount + 1`
+		done
+			
+	done < temp2$$
+
+	fileCount2=1
+	#loop  to sort columns#
+        while [[ $fileCount2 != $fileCount ]]; do
+
+        	sort -n tempCol${fileCount2}$$ >> tempColSort${fileCount2}$$
+		
+		fileCount2=`expr $fileCount2 + 1`
+        done
+
+	fileCount3=1
+	#loop to turn column into line and calculate mean and median#
+	while [[ $fileCount3 != $fileCount ]]; do
+
+		sumRows2=0
+		counterRowElem2=0
+	
+		finalCol=$(cat tempColSort${fileCount3}$$|tr -s '\n' ' ')
+ 
+		fileCount3=`expr $fileCount3 + 1`
+
+		#for each line, add all elements and count all elements#
+                for i in $finalCol
+                do
+                        sumRows2=`expr $sumRows2 + $i`
+                        counterRowElem2=`expr $counterRowElem2 + 1`
+                done
+
+		#if there are an even number of elements, make sure to take the median fron the larger number#
+		middle2=$((($counterRowElem2 + 1)/2))
+		if !(( counterRowElem2 % 2 ));
+			then middle2=`expr $middle2 + 1`
+		fi
+
+                #calculate mean of row elements#
+                meanRows2=$((($sumRows2 + ($counterRowElem2/2))/$counterRowElem2))
+		medianRows2=$(echo $finalCol|cut -d" " -f $middle2) 	
+                echo -n "$meanRows2	" >> meanFile$$
+		echo -n "$medianRows2	">> medianFile$$
+	
+	done
+
+	#output stats#
+	echo "Averages:"
+	cat meanFile$$
+	echo ""
+	echo "Medians:"
+	cat medianFile$$	
+	echo ""
+	
+	#remove temp files#
+	rm temp2$$
+	rm meanFile$$
+	rm medianFile$$
+
+	removeCount=1
+	#remove temp files#
+	while [[ $removeCount != $fileCount ]]; do
+		rm tempCol${removeCount}$$
+		rm tempColSort${removeCount}$$
+		removeCount=`expr $removeCount + 1`
+	done 
+}
+
+
+##if rows specified as argument, call calcRows##
+if [[ $1 = -r* ]];
+	then calcRows
+	exit 0
+fi
+
+
+##if cols specified as argument, call calcCols##
+if [[ $1 = -c* ]];
+	then calcCols
+	exit 0
+fi
+
