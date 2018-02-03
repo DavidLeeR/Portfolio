@@ -1,0 +1,311 @@
+<a href="/">
+	Home
+</a>
+
+<br>	
+
+<center>
+
+{{#each data}}
+<h1>The {{this.name}} Blockchain</h1>
+{{/each}}
+
+
+<p>{{results}}</p>
+
+
+
+
+<!_GENERAL INFO TABLE_>
+
+<table border = "1">
+<caption>
+	{{#each data}}
+	<h2>
+		{{this.name}} General Info
+	</h2>
+	{{/each}}
+</caption>
+	<thead>
+		<tr>
+			<th>
+                                Cryptocurrency 
+                        </th>
+			<th>
+                                Block Time (in seconds)
+                        </th>
+			<th>
+                                Block Size (in kilobytes)
+                        </th>
+		</tr>
+	</thead>
+	<tbody id="bitbody">
+		{{#each data}}
+		 	<tr>	
+                        	<td>
+                        	        {{this.crypto}}
+                        	</td>
+                        	<td>
+                        	        {{this.b_time}}
+                        	</td>
+                        	<td>
+                                	{{this.b_size}}
+                        	</td>
+               		</tr>
+		{{/each}}
+	</tbody>
+</table>
+
+
+
+
+<br>
+<br>
+<br>
+
+
+
+
+<!_NODE TABLE_>
+
+<table border = "1" >
+<caption>
+	<h3>
+		{{#each data}}
+		{{this.name}} Nodes Being Tracked:
+		{{/each}}
+	</h3>
+</caption>
+	<thead>
+		<tr>
+			<th>
+				IP Address
+			</th>
+	
+			<th>
+				Operating System
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+		{{#each node}}
+		<tr>
+			<td>
+				{{this.address}}
+			</td>
+		
+			<td>
+				{{this.os}}
+			</td>
+		</tr>
+		{{/each}}
+	</tbody>
+</table>
+
+
+
+
+<!_USER TABLE_>
+
+<table border = "1" >
+<caption>
+	<h3>
+		{{#each data}}
+		{{this.name}} Node Users Being Tracked:
+		{{/each}}
+	</h3>
+</caption>
+	<thead>
+		<tr>
+		<th>
+			First Name
+		</th>
+		<th>
+			Last Name
+		</th>
+		<th>
+			Address of Node Used
+		</th>
+		<th>
+			Reason For Use
+		</th>
+		</tr>
+	</thead>
+	<tbody>
+		{{#each user}}
+		<tr>
+			<td>
+				{{this.fname}}
+			</td>
+			<td>
+				{{this.lname}}
+			</td>
+			<td>
+				{{this.address}}
+			</td>
+			<td>
+				{{this.use}}
+			</td>
+		</tr>
+		{{/each}}
+		
+	</tbody>
+</table>
+
+<br>
+
+<!_ACCOUNT TABLE_>
+
+<table border = "1" >
+<caption>
+        <h3>
+                {{#each data}}
+                {{this.name}} Accounts Being Tracked:
+                {{/each}}
+        </h3>
+</caption>
+        <thead>
+                <tr>
+                <th>
+			{{#each data}}
+                        	{{this.name}}  Address
+			{{/each}}
+                </th>
+                <th>
+                        Amount of BTC Stored
+                </th>
+                </tr>
+        </thead>
+        <tbody>
+                {{#each account}}
+                <tr>
+                        <td>
+                                {{this.addy}}
+                        </td>
+                        <td>
+                                {{this.amount}}
+                        </td>
+                </tr>
+                {{/each}}
+
+        </tbody>
+</table>
+<br>
+<br>
+<br>
+
+
+<!_FORM TO ADD NODE_>
+
+<form action="/Bitcoin_add_node" method="post">
+<caption>
+	<h4>
+		Add Node
+	</h4>
+</caption>
+	<fieldset>
+		IP Address: <input type="text" name="ipaddress" placeholder="ex. 187.27.3.34">
+		Operating System: <select name="os">
+				<option value="windows">
+					Windows
+				</option>
+				<option value="linux">
+					Linux
+				</option>
+				<option value="darwin">
+					Darwin
+				</option>
+				</select>
+	</fieldset>
+	<fieldset>
+		
+		<input type="submit" value ="Add">
+
+	</fieldset>
+</form>
+
+
+
+
+<!_FORM TO ADD USER_>
+
+<form action="/Bitcoin_add_user" method="post">
+<caption>
+	<h4>
+		Add User
+	</h4>
+</caption>
+	<fieldset>
+		First Name: <input type="text" name="fnamef" placeholder="ex. Steven">
+		
+		Last Name: <input type="text" name="lnamef" placeholder="ex. Hawking">
+
+		Social Security Number: <input type="text" name="ssnf" placeholder="ex. 123456789">
+	</fieldset>	 
+	<fieldset>
+
+		Reason for Use: <select name="usef">
+				<option value="betting">
+					Betting
+				</option>
+				<option value="business">
+                                        Business
+                                </option>
+				<option value="commerce">
+                                        Commerce
+                                </option>
+				<option value="development">
+                                        Development
+                                </option>
+				<option value="investing">
+                                        Investing
+                                </option>
+				<option value="research">
+                                        Research
+                                </option>
+				</select>
+
+	</fieldset>
+	<fieldset>
+		IP Address of Node Used:<select name="addressf">
+					{{#each nAddress}}
+					<option value = {{this.addy}}>
+						{{this.addy}}
+					</option>
+					{{/each}}
+					</select>
+	</fieldset>
+	<fieldset>
+
+                <input type="submit" value ="Add">
+
+        </fieldset>
+
+</form>
+
+
+
+<!_FORM TO ADD ACCOUNT_>
+
+<form action="/Bitcoin_add_account" method="post">
+<caption>
+        <h4>
+                Add Account
+        </h4>
+</caption>
+        <fieldset>
+		{{#each data}}
+                {{this.name}} Address: <input type="text" name="bcaddress" placeholder="length = 34 characters">
+		
+                BTC Amount: <input name="amount" type="number" min="0" step="1" value ="0"/>
+		{{/each}}
+        </fieldset>
+        <fieldset>
+
+                <input type="submit" value ="Add">
+
+        </fieldset>
+</form>
+
+</center>
+
