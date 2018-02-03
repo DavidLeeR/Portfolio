@@ -9,9 +9,3 @@ Steps to download libraries and folder to the appropriate path:
 4) Extract project zip file to any folder                                                                     
                                                                                                 
 The file named "Project.sln" contained within the project folder will be used to assemble each of the programs. 
-                                                                          
-                                                                              
-                                                                                                                                                     
-                                                
-                                                                                                                                                                   
--CS 271: Computer Architecture and Assembly Language
