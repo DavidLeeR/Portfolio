@@ -18,7 +18,7 @@
 **Web Development (JavaScript, Node.js, Express.js, Handlebars.js HTML5, CSS)**
   
     -CS 270: Web Development 
-    
+    -CS 340: Introduction to Databases
     
 **bash shell script**
 
