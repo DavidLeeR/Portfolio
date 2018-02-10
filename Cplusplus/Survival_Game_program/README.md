@@ -1,4 +1,4 @@
-**Survival Game project for Intro to Computer Science II (cs 162) at Oregon State University**
+**Alien Franchise Based Survival Game
 
 **Description:**
 Command line survival game based on the Aliens franchise.
@@ -13,10 +13,8 @@ Requires g++ (GNU) compiler version 4.8.5
 **Demonstrates:**
 Abstract Classes, Pointers, Inheritance, Polymorphism
 
-**Assignment Description:**
-This is your final project and you have freedom to decide what you want to do.  At the end of the term, you will surprisingly find how capable you are to develop a real computer game for your friends to play with! You will design and implement a text-based game where the player movers through a series of rooms or spaces. They will need to gather items to achieve some purpose.  You need to meet the specific requirements in your program, and all the other implementation details are left for you to decide.
+**Description:**
 
-**For a more detailed description, see "description_final.txt"**
 
 
 
