@@ -1,4 +1,4 @@
-**Alien Franchise Based Survival Game
+**Alien Franchise Based Survival Game**
 
 **Description:**
 Command line survival game based on the Aliens franchise.
