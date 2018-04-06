@@ -1,0 +1,225 @@
+<!doctype html>
+
+<!-- Copyright © 2018 CurrentC, LLC -->
+
+<html lang="">
+  <head>
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>CCC Interface</title>
+
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <!-- Place favicon.ico in the root directory -->
+
+    <!-- build:css styles/vendor.css -->
+    <!-- bower:css -->
+    <!-- endbower -->
+    <!-- endbuild -->
+
+    <!-- build:css styles/main.css -->
+    <link rel="stylesheet" href="styles/main.css">
+    <!-- endbuild -->
+    
+  </head>
+<body>
+    <fieldset>
+      <legend>Choose User Address via Index</legend>
+      <input type="number" id="addressIndex" ></input>
+      <input type="button" id="setDefault" value="Set Address" onclick="setDefault();"></input>
+    </fieldset>
+    <fieldset>
+        <legend> Set Master Contract </legend>
+    <input type="button" id="newMain" value="Create New Master Contract" onclick="deployMain();"></input>
+    or enter existing Master Contract address: 
+    <input type="text" id="masterAddress" ></input>
+    <input type="button" id="oldMain" value="Connect Existing Master Contract" onclick="connectMain();"></input>
+    <div></div>
+    Master Contract Address: 
+    <div id="mainAddress"></div>
+  </fieldset>
+    <div></div>
+    <fieldset>
+        <legend> Set Peers </legend>
+    <input type="text" id="otherAddress" placeholder="Other Main Address:" ></input>
+    <input type="text" id="traderName" placeholder="Trader:" ></input>
+    <input type="button" id="connectOther" value="Connect To Other Traders" onclick="addListenContract();"></input>
+    <div></div>
+
+    <div id="mainAddress"></div>
+
+    <label>Peers Connected:</label>
+    <div id="listeningContracts"></div>
+  </fieldset>
+
+
+      <fieldset id="firstField">
+          
+            <legend> Create Trade </legend>
+        
+                <legend>Value to Send (in Ether)</legend>
+                <input type="number" id="value" placeholder="Ether:"></input>
+
+                <legend>Trader</legend>
+                <input type="text" id="trader" placeholder="Trader:"></input>
+
+          
+          
+                <legend>Party</legend>
+                <input type="text" id="party" placeholder="Party:"></input>
+          
+          
+                <legend>Counterparty</legend>
+                <input type="text" id="counterParty" placeholder="Counterparty:"></input>
+                <input type="text" id="counterPartyAdd" placeholder="Counterparty Address:"></input>
+          
+                <legend>Contact</legend>
+                <input type="text" id="contact" placeholder="Contact:"></input>
+          
+          
+                <legend>Entered On</legend>
+                <input type="number" id="enteredM" placeholder="Month:"></input>
+                <input type="number" id="enteredD" placeholder="Day:"></input>
+                <input type="number" id="enteredY" placeholder="Year:"></input>
+                
+          
+                <legend>Deal Date</legend>
+                <input type="number" id="dealDateM" placeholder="Month:"></input>
+                <input type="number" id="dealDateD" placeholder="Day:"></input>
+                <input type="number" id="dealDateY" placeholder="Year:"></input>
+                
+            
+                <legend>Start Date</legend>
+                <input type="number" id="startDateM" placeholder="Month:"></input>
+                <input type="number" id="startDateD" placeholder="Day:"></input>
+                <input type="number" id="startDateY" placeholder="Year:"></input>
+                
+          
+                <legend>End Date</legend>
+                <input type="number" id="endDateM" placeholder="Month:"></input>
+                <input type="number" id="endDateD" placeholder="Day:"></input>
+                <input type="number" id="endDateY" placeholder="Year:"></input>
+                
+          
+                <legend>Pricing Method</legend>
+                <input type="text" id="pricingMethod" placeholder="Pricing method:"></input>
+              
+          
+                <legend>Fixed Price</legend>
+                <input type="number" id="fixedPriceD" placeholder="Dollars:"></input>
+                <input type="number" id="fixedPriceC" placeholder="Cents:"></input>
+          
+          
+                <legend>Total Price</legend>
+                <input type="number" id="totalPriceD" placeholder="Dollars:"></input>
+                <input type="number" id="totalPriceC" placeholder="Cents:"></input>
+          
+          
+                <legend>Index</legend>
+                <input type="number" id="indexW" placeholder="Whole number:"></input>
+                <input type="number" id="indexD" placeholder="Decimal:"></input>
+          
+          
+                <legend>Index Factor</legend>
+                <input type="number" id="indexFactorW" placeholder="Whole number:"></input>
+                <input type="number" id="indexFactorD" placeholder="Decimal:"></input>
+          
+          
+                <legend>Pipe</legend>
+                <input type="text" id="pipe" placeholder="Pipe:"></input>
+          
+          
+                <legend>Point</legend>
+                <input type="text" id="point" placeholder="Point:"></input>
+          
+          
+                <legend>Volume</legend>
+                <input type="number" id="volumeW" placeholder="Whole number:"></input>
+                <input type="number" id="volumeD" placeholder="Decimal number:"></input>
+          
+          
+                <legend>Total Volume</legend>
+                <input type="number" id="totalVolumeW" placeholder="Whole number:"></input>
+                <input type="number" id="totalVolumeD" placeholder="Decimal number:"></input>
+          
+          
+            
+                
+                <legend>Firm</legend>
+                <label>
+                <input type="radio" name="firm" id="yes" value="true"> yes </input>
+                <input type="radio" name="firm" id="no" value="false"> no </input>
+                </label>
+
+                <legend>Comments</legend>
+                <input type="text" id="comments" placeholder="Comments:"></input>
+              
+              
+                <legend>Trade Type</legend>  
+                <input type="button" id="purchaseTrade" value="Purchase" onclick="sendPurchaseTrade();"></input>
+                <input type="button" id="sellTrade" value="Sell" onclick="sendSellTrade();"></input>
+
+          
+            </fieldset>
+
+
+
+          <fieldset id="records">
+              <legend> Deployed Trades </legend>
+              <input type="button" id="refresh2" value="Refresh" onclick="refreshSent2();"></input>
+              <div style="height:120px;width:600px;border:1px solid #ccc;font:16px/26px Georgia, Garamond, Serif;overflow:auto;">
+            <Table border="1" id="deployTable">
+            </Table>
+              </div>
+          </fieldset>
+
+          <fieldset id="records2">
+              <legend> Received Trades </legend>
+              <input type="button" id="refresh" value="Refresh" onclick="refreshSent();"></input>
+              <div style="height:120px;width:600px;border:1px solid #ccc;font:16px/26px Georgia, Garamond, Serif;overflow:auto;">
+            <Table border="1" id="receiveTable">
+            </Table>
+              </div>
+          </fieldset>
+
+          <fieldset id="secondField">
+
+            <div id="readContracts"></div>
+            
+              
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+
+ <!-- build:js scripts/vendor.js -->
+  <!-- bower:js -->
+  <!-- endbower -->
+  <!-- endbuild -->
+    
+    <!-- build:js scripts/main.js -->
+    <script src="/scripts/main.js"></script>
+    <!-- endbuild -->
+  </body>
+</html>
+
+
