@@ -1,2 +1,2 @@
-**All code contained in this repository was written by David Lee Ramirez**
+**Code Portfolio for David Lee Ramirez**
 
